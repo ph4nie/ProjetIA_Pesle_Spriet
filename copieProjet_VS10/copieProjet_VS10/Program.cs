@@ -20,8 +20,8 @@ namespace copieProjet_VS10
             AdjMatrix graph = new AdjMatrix();
             graph.rempliValMatrix();
 
-            int?[,] adj = graph.CreateAdjMatrix();
-            graph.AfficherMatrix(ref adj);
+           // int[,] adj = graph.CreateAdjMatrix();
+           // graph.AfficherMatrix(ref adj);
         }
     }
 }

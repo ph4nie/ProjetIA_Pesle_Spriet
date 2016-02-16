@@ -8,14 +8,14 @@ namespace copieProjet_VS10
 {
     class ReseauRoutier
     {
-        int nbNodes;
+        int nbNodes = 23; //A->W
         private List<FermeNode> fermeNodes;
-        private int[,] adjMat;
+        private int?[,] adjMat;  // ? -> nullable
 
         public ReseauRoutier()
         {
             fermeNodes = new List<FermeNode>();
-            adjMat = new int[fermeNodes.Count, fermeNodes.Count];
+            adjMat = new int?[nbNodes,nbNodes];
         }
 
         public void GetNbImpasses()
@@ -37,6 +37,8 @@ namespace copieProjet_VS10
             }
         }
 
+
+        }
         public void AfficherMatrix()
         {
             
