@@ -38,7 +38,7 @@ namespace ProjetIA_Pesle_Spriet
             GCost = g;
         }
 
-        public double Estimation()
+        public double GetEstimation()
         {
             return HCost;
         }

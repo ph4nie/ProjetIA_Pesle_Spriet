@@ -11,6 +11,7 @@ namespace ProjetIA_Pesle_Spriet
         private List<GenericNode> L_Ouverts;
         private List<GenericNode> L_Fermes;
 
+        // cherche si un noeud est présent dans la liste des fermés
         private GenericNode ChercheNodeDansFermes(string NodeName)
         {
             int i = 0;
@@ -24,6 +25,7 @@ namespace ProjetIA_Pesle_Spriet
             return null;
         }
 
+        // cherche si un noeud est présent dans la liste des ouverts
         private GenericNode ChercheNodeDansOuverts(string NodeName)
         {
             int i = 0;

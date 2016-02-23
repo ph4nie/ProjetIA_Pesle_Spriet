@@ -6,13 +6,26 @@ using System.Threading.Tasks;
 
 namespace ProjetIA_Pesle_Spriet
 {
-    class FermeNode : GenericNode
+    class RouteNode : GenericNode
     {
-        public FermeNode(string nom) : base(nom)
+        protected Dictionary<RouteNode, int> Arcs;
+        public RouteNode(string nom, ReseauRoutier Reseau) : base(nom)
         {
-
+            Reseau.AjouteNode(this);
+            Arcs = new Dictionary<RouteNode, int>();
         }
 
+        public Dictionary<RouteNode, int> GetArcs()
+        {
+            return Arcs;
+        }
+
+        //crée un arc connectant le noeud à un autre (fils)
+        public void AddArc(RouteNode fils, int poids)
+        {
+            Arcs.Add(fils, poids);
+            fils.SetNoeud_Parent(this);
+        }
         public override void CalculeHCost()
         {
             throw new NotImplementedException();
