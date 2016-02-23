@@ -21,6 +21,7 @@ namespace ProjetIA_Pesle_Spriet
 
             // Création des noeuds du réseau routier de collecte de lait : 
             ReseauRoutier ResCollectLait = new ReseauRoutier(23);
+
             RouteNode A = new RouteNode("A",ResCollectLait);
             RouteNode B = new RouteNode("B",ResCollectLait);
             RouteNode C = new RouteNode("C",ResCollectLait);
@@ -99,10 +100,11 @@ namespace ProjetIA_Pesle_Spriet
             V.AddArc(W, 6);
 
             ResCollectLait.CreateAdjMatrix();
-            ResCollectLait.AfficheMatrix();
-            int nbImp = ResCollectLait.GetNbImpasses();
+            // ResCollectLait.AfficheMatrix();
+            List<string> impNoms;
+            int nbImp = ResCollectLait.GetNbImpasses(out impNoms);
 
-            Console.WriteLine("le reseau a {0} impasses", nbImp);
+            Console.WriteLine("le reseau a {0} impasses, pour les noeuds : {1}", nbImp, String.Join(", ",impNoms));
 
         }
     }

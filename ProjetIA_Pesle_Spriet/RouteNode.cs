@@ -9,6 +9,7 @@ namespace ProjetIA_Pesle_Spriet
     class RouteNode : GenericNode
     {
         protected Dictionary<RouteNode, int> Arcs;
+
         public RouteNode(string nom, ReseauRoutier Reseau) : base(nom)
         {
             Reseau.AjouteNode(this);

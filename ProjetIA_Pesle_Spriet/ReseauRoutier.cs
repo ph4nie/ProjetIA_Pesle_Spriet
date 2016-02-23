@@ -44,12 +44,14 @@ namespace ProjetIA_Pesle_Spriet
             }
         }
 
-        public int GetNbImpasses()
+        public int GetNbImpasses(out List<String> impassesNoms)
         {
             //compteur d'arcs de chaque noeud
             int comptArcs = 0;
             //compteur d'impasses totales du réseau
             int comptImpasses = 0;
+
+            impassesNoms = new List<string>();
 
             for (int i = 0; i < adjMat.GetLength(0); i++)
             {
@@ -60,7 +62,10 @@ namespace ProjetIA_Pesle_Spriet
                 }
 
                 if (comptArcs == 1)
+                {
                     comptImpasses++;
+                    impassesNoms.Add(Nodes[i].GetNom());
+                }
                 comptArcs = 0;
             }
             return comptImpasses;
