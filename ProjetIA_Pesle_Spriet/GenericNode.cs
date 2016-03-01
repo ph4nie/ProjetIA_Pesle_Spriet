@@ -80,11 +80,13 @@ namespace ProjetIA_Pesle_Spriet
 
         public void calculCoutTotal()
         {
-
             TotalCost = GCost + HCost;
-
         }
 
+        public override string ToString()
+        {
+            return this.Name;
+        }
         // Méthodes abstrates, donc à surcharger obligatoirement avec override dans une classe fille
         public abstract double GetArcCost(GenericNode N2);
         public abstract bool EndState();

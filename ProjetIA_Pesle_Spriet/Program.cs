@@ -101,11 +101,19 @@ namespace ProjetIA_Pesle_Spriet
 
             ResCollectLait.CreateAdjMatrix();
             // ResCollectLait.AfficheMatrix();
-            List<string> impNoms;
+            List<RouteNode> impNoms;
             int nbImp = ResCollectLait.GetNbImpasses(out impNoms);
 
+            Console.WriteLine("##################################");
             Console.WriteLine("le reseau a {0} impasses, pour les noeuds : {1}", nbImp, String.Join(", ",impNoms));
+            Console.WriteLine("##################################");
 
+            
+            Graph graph = new Graph();
+            List<GenericNode> chemin_A_E = graph.RechercheSolutionAEtoile(E);
+            Console.WriteLine("le plus court chemin de A à E est " + String.Join("; ", chemin_A_E));
+            Console.WriteLine("##################################");
+            
         }
     }
 }

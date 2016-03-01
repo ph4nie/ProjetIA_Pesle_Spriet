@@ -113,7 +113,7 @@ namespace ProjetIA_Pesle_Spriet
                             // HCost pas recalculé car toujours bon
                             N2bis.calculCoutTotal(); // somme de GCost et HCost
                             // Mise à jour de la famille ....
-                            N2bis.Supprime_Liens_Parent ();
+                            N2bis.Supprime_Liens_Parent();
                             N2bis.SetNoeud_Parent(N);
                             // Mise à jour des ouverts
                             L_Ouverts.Remove(N2bis);

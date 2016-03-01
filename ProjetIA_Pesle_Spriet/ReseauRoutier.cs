@@ -12,6 +12,10 @@ namespace ProjetIA_Pesle_Spriet
         private List<RouteNode> Nodes;
         private int?[,] adjMat;  // ? -> nullable
 
+        public List<RouteNode> GetNodes()
+        {
+            return Nodes;
+        }
         public ReseauRoutier(int nbNodes)
         {
             this.nbNodes = nbNodes;
@@ -44,14 +48,14 @@ namespace ProjetIA_Pesle_Spriet
             }
         }
 
-        public int GetNbImpasses(out List<String> impassesNoms)
+        public int GetNbImpasses(out List<RouteNode> impasses)
         {
             //compteur d'arcs de chaque noeud
             int comptArcs = 0;
             //compteur d'impasses totales du réseau
             int comptImpasses = 0;
 
-            impassesNoms = new List<string>();
+            impasses = new List<RouteNode>();
 
             for (int i = 0; i < adjMat.GetLength(0); i++)
             {
@@ -64,7 +68,7 @@ namespace ProjetIA_Pesle_Spriet
                 if (comptArcs == 1)
                 {
                     comptImpasses++;
-                    impassesNoms.Add(Nodes[i].GetNom());
+                    impasses.Add(Nodes[i]);
                 }
                 comptArcs = 0;
             }
@@ -107,5 +111,21 @@ namespace ProjetIA_Pesle_Spriet
             }
             Console.Write("\r\n");
         }
+
+        //public List<string> PlusCourtChemin(RouteNode n1, RouteNode n2, out int? valeur)
+        //{
+        //    // liste des intersections du plus court chemin de n1 vers n2
+        //    List<string> chemin = new List<string>();
+        //    // cout de ce chemin
+        //    valeur = null;
+
+        //    Graph graph;
+            
+        //    while (graph.cher)
+
+       
+
+        //    return chemin;
+        //}
     }
 }
