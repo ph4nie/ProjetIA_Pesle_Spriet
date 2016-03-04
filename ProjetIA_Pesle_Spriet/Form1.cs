@@ -16,5 +16,16 @@ namespace ProjetIA_Pesle_Spriet
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            NodeRecherche.nomLieuFinal = "A";
+
+            Graph graph = new Graph();
+            List<GenericNode> chemin_A_E = graph.RechercheSolutionAEtoile(new NodeRecherche("E"));
+
+            graph.GetSearchTree(treeView1);       //     Console.WriteLine("le plus court chemin de A à E est " + String.Join("; ", chemin_A_E));
+       //     Console.WriteLine("##################################");
+        }
     }
 }

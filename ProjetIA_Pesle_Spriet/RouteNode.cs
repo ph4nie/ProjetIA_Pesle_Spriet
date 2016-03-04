@@ -6,83 +6,49 @@ using System.Threading.Tasks;
 
 namespace ProjetIA_Pesle_Spriet
 {
-    class RouteNode : GenericNode
+    public class RouteNode
     {
-        protected Dictionary<RouteNode, int> Arcs;
-        protected ReseauRoutier Reseau;
+        string Name;
+        public Dictionary<RouteNode, int> Voisins;
+        public static ReseauRoutier Reseau;
 
-        public RouteNode(string nom, ReseauRoutier reseau) : base(nom)
+    public RouteNode(string nom, ReseauRoutier reseau)
         {
+            Name=nom;
             Reseau = reseau;
             reseau.AjouteNode(this);
-            Arcs = new Dictionary<RouteNode, int>();
+            Voisins = new Dictionary<RouteNode, int>();
         }
 
-        public Dictionary<RouteNode, int> GetArcs()
+        public string GetName()
         {
-            return Arcs;
+            return Name;
         }
 
-        //crée un arc connectant le noeud à un autre (fils)
-        public void AddArc(RouteNode fils, int poids)
+        public Dictionary<RouteNode, int> GetVoisins()
         {
-            Arcs.Add(fils, poids);
-            fils.SetNoeud_Parent(this);
-        }
-        public override void CalculeHCost()
-        {
-            throw new NotImplementedException();
+            return Voisins;
         }
 
-        
-        public override bool EndState()
+        //crée un arc connectant le noeud à un autre (voisin)
+        public void AddArc(RouteNode voisin, int poids)
         {
-            throw new NotImplementedException();
+                Voisins.Add(voisin, poids);
+        }
 
-
+        public override string ToString()
+        {
+            return this.Name;
         }
 
         public bool IsImpasse()
         {
             List<RouteNode> impasses = new List<RouteNode>();
-            int nbImp = this.Reseau.GetNbImpasses(out impasses);
+            int nbImp = Reseau.GetNbImpasses(out impasses);
             if (nbImp != 0 && impasses.Contains(this))
                 return true;
             else
                 return false;
-        }
-
-        public override double GetArcCost(GenericNode N2)
-        {
-            int arcCost;
-
-            if (N2 == this)
-                return 0;
-
-            else if (this.GetArcs().TryGetValue(N2 as RouteNode, out arcCost))
-            {
-                return arcCost;
-            }
-            else
-                throw new NotImplementedException();
-        }
-
-        // retourne la liste de tous les noeuds successeurs de this
-        public override List<GenericNode> GetListSucc()
-        {
-            /*
-            List<GenericNode> listSucc = new List<GenericNode>();
-
-            foreach (RouteNode n in Reseau.GetNodes())
-            {
-                if (n.ParentNode == this)
-                    listSucc.Add(n);
-            }
-
-            return listSucc;
-            */
-
-            return this.GetEnfants();
-        }
+        }    
     }
 }

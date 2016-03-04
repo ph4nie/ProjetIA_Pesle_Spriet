@@ -14,13 +14,12 @@ namespace ProjetIA_Pesle_Spriet
         [STAThread]
         static void Main()
         {
-            /*Application.EnableVisualStyles();
-            Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());*/
+           
 
 
             // Création des noeuds du réseau routier de collecte de lait : 
             ReseauRoutier ResCollectLait = new ReseauRoutier(23);
+            NodeRecherche.reseau = ResCollectLait;
 
             RouteNode A = new RouteNode("A",ResCollectLait);
             RouteNode B = new RouteNode("B",ResCollectLait);
@@ -46,7 +45,7 @@ namespace ProjetIA_Pesle_Spriet
             RouteNode V = new RouteNode("V",ResCollectLait);
             RouteNode W = new RouteNode("W",ResCollectLait);
 
-            A.SetGCost(0); //A est le noeud initial: chemin null
+           // A.SetGCost(0); //A est le noeud initial: chemin null
 
             A.AddArc(B, 4);
             A.AddArc(C, 5);
@@ -100,19 +99,19 @@ namespace ProjetIA_Pesle_Spriet
             V.AddArc(W, 6);
 
             ResCollectLait.CreateAdjMatrix();
-            // ResCollectLait.AfficheMatrix();
+            ResCollectLait.AfficheMatrix();
             List<RouteNode> impNoms;
             int nbImp = ResCollectLait.GetNbImpasses(out impNoms);
+
+            Application.EnableVisualStyles();
+            Application.SetCompatibleTextRenderingDefault(false);
+            Application.Run(new Form1());
 
             Console.WriteLine("##################################");
             Console.WriteLine("le reseau a {0} impasses, pour les noeuds : {1}", nbImp, String.Join(", ",impNoms));
             Console.WriteLine("##################################");
 
-            
-            Graph graph = new Graph();
-            List<GenericNode> chemin_A_E = graph.RechercheSolutionAEtoile(E);
-            Console.WriteLine("le plus court chemin de A à E est " + String.Join("; ", chemin_A_E));
-            Console.WriteLine("##################################");
+         
             
         }
     }

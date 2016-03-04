@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetIA_Pesle_Spriet
 {
-    class ReseauRoutier
+    public class ReseauRoutier
     {
         int nbNodes;
         private List<RouteNode> Nodes;
@@ -27,8 +27,9 @@ namespace ProjetIA_Pesle_Spriet
         {
             Nodes.Add(n);
         }
+
         // creation de la matrice adjacente
-        public void CreateAdjMatrix() 
+        public int?[,] CreateAdjMatrix() 
         {
             for (int i=0;i<nbNodes;i++)
             {
@@ -39,13 +40,14 @@ namespace ProjetIA_Pesle_Spriet
                     RouteNode n2 = Nodes[j];
                     int arcVal;
                     // s'il existe un arc entre n1 et n2, on recup le poids
-                    if (n1.GetArcs().TryGetValue(n2, out arcVal))
+                    if (n1.GetVoisins().TryGetValue(n2, out arcVal))
                     {
                         adjMat[i, j] = arcVal;
                         adjMat[j, i] = arcVal; //matrice symétrique
                     }
                 }
             }
+            return adjMat;
         }
 
         public int GetNbImpasses(out List<RouteNode> impasses)
@@ -111,21 +113,5 @@ namespace ProjetIA_Pesle_Spriet
             }
             Console.Write("\r\n");
         }
-
-        //public List<string> PlusCourtChemin(RouteNode n1, RouteNode n2, out int? valeur)
-        //{
-        //    // liste des intersections du plus court chemin de n1 vers n2
-        //    List<string> chemin = new List<string>();
-        //    // cout de ce chemin
-        //    valeur = null;
-
-        //    Graph graph;
-            
-        //    while (graph.cher)
-
-       
-
-        //    return chemin;
-        //}
     }
 }
