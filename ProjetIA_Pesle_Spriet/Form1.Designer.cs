@@ -28,19 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.button_calculePlusCourtChemin = new System.Windows.Forms.Button();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.textBox_noeudInit = new System.Windows.Forms.TextBox();
+            this.textBox_noeudFinal = new System.Windows.Forms.TextBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
-            // button1
+            // button_calculePlusCourtChemin
             // 
-            this.button1.Location = new System.Drawing.Point(61, 27);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.button_calculePlusCourtChemin.Location = new System.Drawing.Point(12, 119);
+            this.button_calculePlusCourtChemin.Name = "button_calculePlusCourtChemin";
+            this.button_calculePlusCourtChemin.Size = new System.Drawing.Size(86, 36);
+            this.button_calculePlusCourtChemin.TabIndex = 0;
+            this.button_calculePlusCourtChemin.Text = "Calculer le + court chemin";
+            this.button_calculePlusCourtChemin.UseVisualStyleBackColor = true;
+            this.button_calculePlusCourtChemin.Click += new System.EventHandler(this.button1_Click);
             // 
             // treeView1
             // 
@@ -49,23 +52,52 @@
             this.treeView1.Size = new System.Drawing.Size(276, 295);
             this.treeView1.TabIndex = 1;
             // 
+            // textBox_noeudInit
+            // 
+            this.textBox_noeudInit.Location = new System.Drawing.Point(12, 52);
+            this.textBox_noeudInit.Name = "textBox_noeudInit";
+            this.textBox_noeudInit.Size = new System.Drawing.Size(86, 20);
+            this.textBox_noeudInit.TabIndex = 2;
+            // 
+            // textBox_noeudFinal
+            // 
+            this.textBox_noeudFinal.Location = new System.Drawing.Point(12, 78);
+            this.textBox_noeudFinal.Name = "textBox_noeudFinal";
+            this.textBox_noeudFinal.Size = new System.Drawing.Size(86, 20);
+            this.textBox_noeudFinal.TabIndex = 3;
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.Location = new System.Drawing.Point(13, 202);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(120, 95);
+            this.listBox1.TabIndex = 4;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(467, 328);
+            this.Controls.Add(this.listBox1);
+            this.Controls.Add(this.textBox_noeudFinal);
+            this.Controls.Add(this.textBox_noeudInit);
             this.Controls.Add(this.treeView1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.button_calculePlusCourtChemin);
             this.Name = "Form1";
             this.Text = "Form1";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button_calculePlusCourtChemin;
         private System.Windows.Forms.TreeView treeView1;
+        private System.Windows.Forms.TextBox textBox_noeudInit;
+        private System.Windows.Forms.TextBox textBox_noeudFinal;
+        private System.Windows.Forms.ListBox listBox1;
     }
 }
 

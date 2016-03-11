@@ -33,7 +33,7 @@ namespace ProjetIA_Pesle_Spriet
         //crée un arc connectant le noeud à un autre (voisin)
         public void AddArc(RouteNode voisin, int poids)
         {
-                Voisins.Add(voisin, poids);
+            Voisins.Add(voisin, poids);            
         }
 
         public override string ToString()

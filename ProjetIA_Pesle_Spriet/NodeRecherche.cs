@@ -10,33 +10,24 @@ namespace ProjetIA_Pesle_Spriet
     {
         public static ReseauRoutier reseau;
         public static string nomLieuFinal;
-    //    private RouteNode referent;  // lien entre un noeud de recherche et un noeud dans le reseau routier
         
         public NodeRecherche ( string nom ) : base(nom)
         {
-            //recup LE noeud du reseau qui a le meme nom que this
-       //    foreach(RouteNode rn in RouteNode.Reseau.GetNodes())
-       //     {
-       //         if (rn.GetName() == Name)
-        //            referent = rn;
-         //   }
+            
         }
 
-    /*    public RouteNode GetReferent()
-        {
-            return referent;
-        }
-        */
         //recupère la valeur pour la clef correspondant à N2
         public override double GetArcCost(GenericNode N2)
         {
             NodeRecherche n2 = N2 as NodeRecherche;
-            RouteNode referent1 = reseau.GetNodes()[(Name[0]) - 65];
+            RouteNode referent1 = reseau.GetNodes()[(Name[0]) - 65]; // conversion de l'indice [A;W] en code ASCII
             RouteNode referent2 = reseau.GetNodes()[(n2.Name[0]) - 65];
 
-            double cout = referent1.GetVoisins()[referent2];
+            double cout = referent1.GetVoisins()[referent2]; //recup la Value corresp à Key=referent2
             return cout;
+
             }
+
         public override bool EndState()
         {
             if (Name == nomLieuFinal)
@@ -50,6 +41,7 @@ namespace ProjetIA_Pesle_Spriet
         {
             List<GenericNode> ListeSucc = new List<GenericNode>();
             RouteNode referent = reseau.GetNodes()[(Name[0]) - 65];
+
             //pour chaque voisin de ce noeud dans le reseau
             foreach (KeyValuePair<RouteNode,int> voisin in referent.GetVoisins())
             {
@@ -60,9 +52,11 @@ namespace ProjetIA_Pesle_Spriet
             }
              return ListeSucc;
         }
+
+        // estimation du cout restant pour atteindre noeud final
         public override void CalculeHCost()
         {
-            
+            SetEstimation(0);
         }
     }
 }

@@ -19,13 +19,18 @@ namespace ProjetIA_Pesle_Spriet
 
         private void button1_Click(object sender, EventArgs e)
         {
-            NodeRecherche.nomLieuFinal = "A";
+            NodeRecherche.nomLieuFinal = textBox_noeudFinal.Text;
 
             Graph graph = new Graph();
-            List<GenericNode> chemin_A_E = graph.RechercheSolutionAEtoile(new NodeRecherche("E"));
+            List<GenericNode> chemin = graph.RechercheSolutionAEtoile(new NodeRecherche(textBox_noeudInit.Text));
 
-            graph.GetSearchTree(treeView1);       //     Console.WriteLine("le plus court chemin de A à E est " + String.Join("; ", chemin_A_E));
-       //     Console.WriteLine("##################################");
+            listBox1.Items.Clear();
+            foreach (GenericNode n in chemin)
+            {
+                listBox1.Items.Add(n.ToString());
+            }
+
+            graph.GetSearchTree(treeView1);
         }
     }
 }

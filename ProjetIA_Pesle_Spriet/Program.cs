@@ -52,51 +52,81 @@ namespace ProjetIA_Pesle_Spriet
             A.AddArc(D, 6);
 
             B.AddArc(E, 5);
+            B.AddArc(A, 4);
 
             C.AddArc(D, 4);
             C.AddArc(E, 6);
             C.AddArc(G, 8);
+            C.AddArc(A, 5);
 
             D.AddArc(F, 9);
+            D.AddArc(A, 6);
+            D.AddArc(C, 4);
 
             E.AddArc(H, 4);
+            E.AddArc(C, 6);
+            E.AddArc(B, 5);
 
+            F.AddArc(D, 9);
             F.AddArc(L, 9);
 
             G.AddArc(H, 8);
             G.AddArc(K, 8);
+            G.AddArc(C, 8);
 
             H.AddArc(I, 2);
+            H.AddArc(E, 4);
+            H.AddArc(G, 8);
 
             I.AddArc(J, 3);
             I.AddArc(K, 4);
+            I.AddArc(H, 2);
 
             K.AddArc(W, 7);
+            K.AddArc(I, 4);
+            K.AddArc(G, 8);
 
             L.AddArc(M, 2);
+            L.AddArc(F, 9);
             L.AddArc(N, 4);
             L.AddArc(Q, 7);
             L.AddArc(W, 10);
 
             N.AddArc(O, 7);
             N.AddArc(P, 3);
+            N.AddArc(M, 4);
 
             O.AddArc(P, 3);
             O.AddArc(S, 8);
+            O.AddArc(N, 7);
 
             P.AddArc(R, 5);
+            P.AddArc(O, 3);
+            P.AddArc(N, 3);
 
             Q.AddArc(R, 3);
+            Q.AddArc(L, 7);
 
             R.AddArc(T, 6);
+            R.AddArc(P, 5);
+            R.AddArc(Q, 3);
 
             S.AddArc(U, 7);
+            S.AddArc(O, 8);
 
             T.AddArc(U, 5);
+            T.AddArc(R, 6);
 
             U.AddArc(V, 11);
+            U.AddArc(S, 7);
+            U.AddArc(T, 5);
 
             V.AddArc(W, 6);
+            V.AddArc(U, 11);
+
+            W.AddArc(V, 6);
+            W.AddArc(L, 10);
+            W.AddArc(K, 7);
 
             ResCollectLait.CreateAdjMatrix();
             ResCollectLait.AfficheMatrix();
