@@ -14,9 +14,7 @@ namespace ProjetIA_Pesle_Spriet
         [STAThread]
         static void Main()
         {
-           
-
-
+          
             // Création des noeuds du réseau routier de collecte de lait : 
             ReseauRoutier ResCollectLait = new ReseauRoutier(23);
             NodeRecherche.reseau = ResCollectLait;
@@ -45,7 +43,7 @@ namespace ProjetIA_Pesle_Spriet
             RouteNode V = new RouteNode("V",ResCollectLait);
             RouteNode W = new RouteNode("W",ResCollectLait);
 
-           // A.SetGCost(0); //A est le noeud initial: chemin null
+            // Création des arcs entre les noeuds
 
             A.AddArc(B, 4);
             A.AddArc(C, 5);
@@ -82,6 +80,8 @@ namespace ProjetIA_Pesle_Spriet
             I.AddArc(K, 4);
             I.AddArc(H, 2);
 
+            J.AddArc(I, 3);
+
             K.AddArc(W, 7);
             K.AddArc(I, 4);
             K.AddArc(G, 8);
@@ -92,9 +92,11 @@ namespace ProjetIA_Pesle_Spriet
             L.AddArc(Q, 7);
             L.AddArc(W, 10);
 
+            M.AddArc(L, 2);
+
             N.AddArc(O, 7);
             N.AddArc(P, 3);
-            N.AddArc(M, 4);
+            N.AddArc(L, 4);
 
             O.AddArc(P, 3);
             O.AddArc(S, 8);
@@ -136,9 +138,11 @@ namespace ProjetIA_Pesle_Spriet
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
-
+            Application.Run(new Form2());
+            
             Console.WriteLine("##################################");
-            Console.WriteLine("le reseau a {0} impasses, pour les noeuds : {1}", nbImp, String.Join(", ",impNoms));
+            Console.WriteLine("le reseau a {0} impasses, pour les noeuds : {1}",
+                nbImp, String.Join(", ",impNoms));
             Console.WriteLine("##################################");
 
          

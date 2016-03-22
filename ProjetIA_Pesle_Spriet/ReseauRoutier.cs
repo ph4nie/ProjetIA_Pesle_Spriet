@@ -113,5 +113,25 @@ namespace ProjetIA_Pesle_Spriet
             }
             Console.Write("\r\n");
         }
+
+        // renvoie le chemin le plus court de A à A en passant par les "passages"
+        public void getItineraire(List<string> noeudsPassage)
+        {
+            double coutTotal=0;
+
+            NodeRecherche n1 = new NodeRecherche("A");
+            NodeRecherche n2;
+            foreach (string np in noeudsPassage)
+            {
+                NodeRecherche.nomLieuFinal = np;
+                //calcule plus court chemin de n1 à n2 // comme dans le Form1
+               // double cout = n1.
+               //l'ajoute au cout total
+               //coutTotal+=cout;
+
+            // après on réitère l'opé en changeant l'ordre des noeuds
+            // on garde la solution pour le coutTotal le plus faible
+            }
+        }
     }
 }

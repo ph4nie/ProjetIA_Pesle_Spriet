@@ -16,19 +16,31 @@ namespace ProjetIA_Pesle_Spriet
         {
             InitializeComponent();
         }
-
-        private void button1_Click(object sender, EventArgs e)
+        
+        private void buttonCourtChemin_Click(object sender, EventArgs e)
         {
             NodeRecherche.nomLieuFinal = textBox_noeudFinal.Text;
 
             Graph graph = new Graph();
-            List<GenericNode> chemin = graph.RechercheSolutionAEtoile(new NodeRecherche(textBox_noeudInit.Text));
+            NodeRecherche noeudInit = new NodeRecherche(textBox_noeudInit.Text);
+            List<GenericNode> chemin = graph.RechercheSolutionAEtoile(noeudInit);
 
-            listBox1.Items.Clear();
+            double cout=0;
+            NodeRecherche n1 = noeudInit;
+            NodeRecherche n2;
+            listBoxChemin.Items.Clear();
             foreach (GenericNode n in chemin)
             {
-                listBox1.Items.Add(n.ToString());
+                listBoxChemin.Items.Add(n.ToString());
+                
+                n2 = n as NodeRecherche;
+                if (n2!=n1)
+                cout += n1.GetArcCost(n2);
+                n1 = n2;
             }
+
+
+            textBoxCout.Text = cout.ToString();            
 
             graph.GetSearchTree(treeView1);
         }

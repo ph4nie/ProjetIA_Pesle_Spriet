@@ -58,5 +58,27 @@ namespace ProjetIA_Pesle_Spriet
         {
             SetEstimation(0);
         }
+
+        /*
+        public double calculePlusCourtChemin()
+        {
+
+            Graph graph = new Graph();
+            double cout = 0;
+            NodeRecherche n1 = this;
+            NodeRecherche n2;
+            NodeRecherche noeudFinal = new NodeRecherche(NodeRecherche.nomLieuFinal);
+            List<GenericNode> chemin = graph.RechercheSolutionAEtoile(n1);
+            foreach (GenericNode n in chemin)
+            {
+                n2 = n as NodeRecherche;
+                if (n2 != n1)
+                    cout += n1.GetArcCost(n2);
+                n1 = n2;
+            }
+            return cout;
+        }
+        */
+
     }
 }
