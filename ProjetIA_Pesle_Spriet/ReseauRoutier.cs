@@ -115,23 +115,42 @@ namespace ProjetIA_Pesle_Spriet
         }
 
         // renvoie le chemin le plus court de A à A en passant par les "passages"
-        public void getItineraire(List<string> noeudsPassage)
+        public double getItineraire(List<string> pointPassage, out string cheminTotal)
         {
             double coutTotal=0;
+            cheminTotal = "";
 
             NodeRecherche n1 = new NodeRecherche("A");
             NodeRecherche n2;
-            foreach (string np in noeudsPassage)
+            pointPassage.Add("A"); // on veut revenir à A à la fin de la boucle
+            foreach (string np in pointPassage)
             {
                 NodeRecherche.nomLieuFinal = np;
-                //calcule plus court chemin de n1 à n2 // comme dans le Form1
-               // double cout = n1.
-               //l'ajoute au cout total
-               //coutTotal+=cout;
 
-            // après on réitère l'opé en changeant l'ordre des noeuds
-            // on garde la solution pour le coutTotal le plus faible
+                //calcule plus court chemin de n1 à n2 // comme dans le Form1
+                Graph graph = new Graph();
+                
+                List<GenericNode> chemin = graph.RechercheSolutionAEtoile(n1);
+                cheminTotal += String.Join(", ", chemin);
+                double cout = 0;
+                                
+                foreach (GenericNode n in chemin)
+                {
+                    n2 = n as NodeRecherche;
+                    if (n2 != n1)
+                        cout += n1.GetArcCost(n2); // !! n1 et n2 doivent ê voisins !!
+                    n1 = n2;
+                    //l'ajoute au cout total
+                    coutTotal+=cout;
+                }
+                n1 = new NodeRecherche(np); //           
             }
+            
+            // après on réitère l'opé en changeant l'ordre des noeuds -> comment ? 
+            // on stocke à chaq fois le coutTotal ds une liste ou un tab
+            // on garde la solution pour le coutTotal le plus faible
+
+            return coutTotal;
         }
     }
 }

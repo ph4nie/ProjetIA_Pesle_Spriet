@@ -134,7 +134,7 @@ namespace ProjetIA_Pesle_Spriet
             ResCollectLait.AfficheMatrix();
             List<RouteNode> impNoms;
             int nbImp = ResCollectLait.GetNbImpasses(out impNoms);
-
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
@@ -144,8 +144,7 @@ namespace ProjetIA_Pesle_Spriet
             Console.WriteLine("le reseau a {0} impasses, pour les noeuds : {1}",
                 nbImp, String.Join(", ",impNoms));
             Console.WriteLine("##################################");
-
-         
+           
             
         }
     }
