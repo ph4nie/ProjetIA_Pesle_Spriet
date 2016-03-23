@@ -115,40 +115,53 @@ namespace ProjetIA_Pesle_Spriet
         }
 
         // renvoie le chemin le plus court de A à A en passant par les "passages"
-        public double getItineraire(List<string> pointPassage, out string cheminTotal)
+        public double getItineraire(List<string> pointPassage, out string cheminString)
         {
-            double coutTotal=0;
-            cheminTotal = "";
+            double coutTotal = 0;
+            cheminString = "";
 
             NodeRecherche n1 = new NodeRecherche("A");
             NodeRecherche n2;
             pointPassage.Add("A"); // on veut revenir à A à la fin de la boucle
+
+            Graph graph = new Graph();
+
+            List<GenericNode> chemin;
+            List<GenericNode> cheminTotal = new List<GenericNode>();
+
             foreach (string np in pointPassage)
             {
                 NodeRecherche.nomLieuFinal = np;
 
                 //calcule plus court chemin de n1 à n2 // comme dans le Form1
-                Graph graph = new Graph();
-                
-                List<GenericNode> chemin = graph.RechercheSolutionAEtoile(n1);
-                cheminTotal += String.Join(", ", chemin);
+                chemin = graph.RechercheSolutionAEtoile(n1);
+
+
+                /****************
+                fait varier la taille de la liste a explorer dans le prochain foreach -> plantage
+                =>séparer en deux boucles, par exemple...
+                // enlève les doublons (noeuds qui sont sur la route pour aller aux autres)
+                if (chemin.Contains(n1) && n1.GetNom() != "A")
+                    cheminTotal.Remove(n1);
+*************************/
                 double cout = 0;
-                                
-                foreach (GenericNode n in chemin)
+
+                foreach (GenericNode n in cheminTotal)
                 {
                     n2 = n as NodeRecherche;
                     if (n2 != n1)
-                        cout += n1.GetArcCost(n2); // !! n1 et n2 doivent ê voisins !!
+                        cout += n1.GetArcCost(n2);
                     n1 = n2;
                     //l'ajoute au cout total
-                    coutTotal+=cout;
+                    coutTotal += cout;
                 }
-                n1 = new NodeRecherche(np); //           
+                n1 = new NodeRecherche(np);
             }
-            
+
             // après on réitère l'opé en changeant l'ordre des noeuds -> comment ? 
             // on stocke à chaq fois le coutTotal ds une liste ou un tab
             // on garde la solution pour le coutTotal le plus faible
+            cheminString += String.Join(", ", cheminTotal);
 
             return coutTotal;
         }
