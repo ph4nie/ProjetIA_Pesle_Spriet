@@ -50,25 +50,25 @@ namespace ProjetIA_Pesle_Spriet
                 //et l'ajoute à la liste
                 ListeSucc.Add(successeur);
             }
-             return ListeSucc;
+            return ListeSucc;
         }
 
-        // estimation du cout restant pour atteindre noeud final
-        public override void CalculeHCost()
+        //renvoie le cout du + court chemin de noeud1 à noeud2
+        public double calculeMeilleurCout(string noeudFinal, out List<GenericNode> chemin)
         {
-            SetEstimation(0);
-        }
-
-        /*
-        public double calculePlusCourtChemin()
-        {
+            NodeRecherche noeudInit = new NodeRecherche(Name); // départ de this
+            NodeRecherche.nomLieuFinal = noeudFinal; // retour à noeudFinal
 
             Graph graph = new Graph();
+
+            //meilleur chemin de this à noeudFinal
+            chemin = graph.RechercheSolutionAEtoile(noeudInit);
+
             double cout = 0;
-            NodeRecherche n1 = this;
+            NodeRecherche n1 = noeudInit;
             NodeRecherche n2;
-            NodeRecherche noeudFinal = new NodeRecherche(NodeRecherche.nomLieuFinal);
-            List<GenericNode> chemin = graph.RechercheSolutionAEtoile(n1);
+
+            //somme des couts intermédiaires
             foreach (GenericNode n in chemin)
             {
                 n2 = n as NodeRecherche;
@@ -76,9 +76,21 @@ namespace ProjetIA_Pesle_Spriet
                     cout += n1.GetArcCost(n2);
                 n1 = n2;
             }
-            return cout;
-        }
-        */
 
+            return (cout);
+        }
+
+        // surcharge si pas besoin de recup le chemin
+        public double calculeMeilleurCout(string noeudFinal)
+        {
+            List<GenericNode> chemin = new List<GenericNode>();
+            return (calculeMeilleurCout(noeudFinal, out  chemin));
+
+        }
+        // estimation du cout restant pour atteindre noeud final = cout de retour à A
+        public override void CalculeHCost()
+        {            
+            SetEstimation(calculeMeilleurCout("A"));
+        }
     }
 }

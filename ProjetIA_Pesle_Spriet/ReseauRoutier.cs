@@ -114,54 +114,83 @@ namespace ProjetIA_Pesle_Spriet
             Console.Write("\r\n");
         }
 
-        // renvoie le chemin le plus court de A à A en passant par les "passages"
-        public double getItineraire(List<string> pointPassage, out string cheminString)
+        // renvoie le chemin le plus court de A à A en passant par les points de passage séléctionnés
+        public double getItineraire(List<string> pointsPassage, out string cheminString)
         {
+            List<GenericNode> pointsPassageOrdonnes = new List<GenericNode>();
+            //liste ordonnée des noeuds du meilleur chemin
+            List<NodeRecherche> cheminTotal = new List<NodeRecherche>();
+            // cout associé
             double coutTotal = 0;
-            cheminString = "";
 
-            NodeRecherche n1 = new NodeRecherche("A");
-            NodeRecherche n2;
-            pointPassage.Add("A"); // on veut revenir à A à la fin de la boucle
 
-            Graph graph = new Graph();
+            // dico~matrice des <chemins+couts> de chaq couple de points de passage
+            Dictionary<List<GenericNode>, double> coutsInter = new Dictionary<List<GenericNode>, double>();
 
-            List<GenericNode> chemin;
-            List<GenericNode> cheminTotal = new List<GenericNode>();
-
-            foreach (string np in pointPassage)
+            //remplissage du dico ~matrice
+            //pour chaque couple de noeuds
+            foreach (string np1 in pointsPassage)
             {
-                NodeRecherche.nomLieuFinal = np;
-
-                //calcule plus court chemin de n1 à n2 // comme dans le Form1
-                chemin = graph.RechercheSolutionAEtoile(n1);
-
-
-                /****************
-                fait varier la taille de la liste a explorer dans le prochain foreach -> plantage
-                =>séparer en deux boucles, par exemple...
-                // enlève les doublons (noeuds qui sont sur la route pour aller aux autres)
-                if (chemin.Contains(n1) && n1.GetNom() != "A")
-                    cheminTotal.Remove(n1);
-*************************/
-                double cout = 0;
-
-                foreach (GenericNode n in cheminTotal)
+                NodeRecherche n1 = new NodeRecherche(np1);
+                foreach (string np2 in pointsPassage)
                 {
-                    n2 = n as NodeRecherche;
-                    if (n2 != n1)
-                        cout += n1.GetArcCost(n2);
-                    n1 = n2;
-                    //l'ajoute au cout total
-                    coutTotal += cout;
+                    NodeRecherche n2 = new NodeRecherche(np2);
+                    List<GenericNode> chemin;
+                    double cout = n1.calculeMeilleurCout(np2,out chemin);
+
+                    coutsInter.Add(chemin,cout);
                 }
-                n1 = new NodeRecherche(np);
             }
 
-            // après on réitère l'opé en changeant l'ordre des noeuds -> comment ? 
-            // on stocke à chaq fois le coutTotal ds une liste ou un tab
-            // on garde la solution pour le coutTotal le plus faible
-            cheminString += String.Join(", ", cheminTotal);
+
+            // a partir de cette "matrice", calcul des distances de proche en proche 
+            // pour définir le chemin total à parcourir dans l'ordre optimal
+            // => pr chaq "ligne" de la matrice = pr chaque couple contenant le noeud init
+            // on va au prochain plus proche (n2)
+            //on stocke le nom du noeud et le cout associé
+            // on passe sur la "ligne" de n2 et on va au plus proche... etc
+            // a la fin, on a la liste des noeuds du chemin optimal, et le cout total
+
+            GenericNode noeudCourant = new NodeRecherche("A"); // on demarre en A
+            GenericNode prochainNoeud;
+
+            pointsPassageOrdonnes.Add(noeudCourant);
+
+            foreach (KeyValuePair< List<GenericNode>, double> couple in coutsInter)
+            {
+                //dico temporaire correspondant aux successeurs du noeudCourant (= sa ligne dans la matrice) 
+                Dictionary<List<GenericNode>, double> successeurs = new Dictionary<List<GenericNode>, double>();
+
+                if (couple.Key.First<GenericNode>() == noeudCourant)
+                {
+                    successeurs.Add(couple.Key,couple.Value);
+                }
+
+                //recherche du successeur le plus proche
+                foreach(KeyValuePair<List<GenericNode>, double> succ in successeurs)
+                {
+                    // celui dont le chemin est le plus court
+                    if(succ.Value== successeurs.Values.Min())
+                    {
+                        // dernière valeur du chemin pour aller à ce noeud
+                        prochainNoeud = succ.Key.Last<GenericNode>();
+                        //ajout du noeud a la liste ordonnée
+                        pointsPassageOrdonnes.Add(prochainNoeud);
+                        //passage au couple suivant, c à d au depart de ce noeud
+                        noeudCourant = prochainNoeud;
+                        
+                    }
+                }
+            }
+
+            /* on recup les points d'interet dans l'ordre ideal de passage, 
+            il faut récupérer aussi TOUS les points du chemin avec le cout */
+
+            //    /!\ plantage si passage par une impasse du reseeau !! A résoudre ! /!\
+
+            // conversion du chemin en string lisible
+            cheminString = "";
+            cheminString+= String.Join(", ", pointsPassageOrdonnes/*cheminTotal*/);
 
             return coutTotal;
         }
