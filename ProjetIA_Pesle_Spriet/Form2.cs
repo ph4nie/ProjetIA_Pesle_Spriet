@@ -21,24 +21,23 @@ namespace ProjetIA_Pesle_Spriet
         private void CalculeItineraire(object sender, EventArgs e)
         {
             //int comptFerme = 0; // compte fermes parmi points passage
-            List<string> pointPassage = new List<string>();
+            List<string> pointsPassage = new List<string>();
+            pointsPassage.Add("A"); // A toujours inclu
 
             // toutes les fermes du reseau laitier
             List<string> fermes = new List<string>(new string[] {"B","H","G","J","F","M","O","V","Q","T","S"});
-            
-            
+                       
             
             // parcours des noeuds selectionnés par l'utilisateur
             foreach (string point in checkedListBoxNoeuds.CheckedItems)
             {
-                pointPassage.Add(point);
+                pointsPassage.Add(point);
             }
-          
-            string chemin;
-            labelCout.Text = NodeRecherche.reseau.getItineraire(pointPassage, out chemin).ToString();
+
+            string chemin="";
+            double cout = NodeRecherche.reseau.getItineraire(pointsPassage, out chemin);
+            labelCout.Text = cout.ToString();
             labelAfficheChemin.Text = chemin;
-
-
         }
     }
 }

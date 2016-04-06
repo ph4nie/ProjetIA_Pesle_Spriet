@@ -53,10 +53,10 @@ namespace ProjetIA_Pesle_Spriet
             return ListeSucc;
         }
 
-        //renvoie le cout du + court chemin de noeud1 à noeud2
+        //renvoie le cout du + court chemin de this à noeudFinal
         public double calculeMeilleurCout(string noeudFinal, out List<GenericNode> chemin)
         {
-            NodeRecherche noeudInit = new NodeRecherche(Name); // départ de this
+            NodeRecherche noeudInit = this; // new NodeRecherche(Name); // départ de this
             NodeRecherche.nomLieuFinal = noeudFinal; // retour à noeudFinal
 
             Graph graph = new Graph();

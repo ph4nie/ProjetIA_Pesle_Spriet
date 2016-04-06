@@ -134,11 +134,14 @@ namespace ProjetIA_Pesle_Spriet
                 NodeRecherche n1 = new NodeRecherche(np1);
                 foreach (string np2 in pointsPassage)
                 {
-                    NodeRecherche n2 = new NodeRecherche(np2);
-                    List<GenericNode> chemin;
-                    double cout = n1.calculeMeilleurCout(np2,out chemin);
+                    if (np1 != np2)  // diagonale de la matrice nulle
+                    {
+                        NodeRecherche n2 = new NodeRecherche(np2);
+                        List<GenericNode> chemin;
+                        double cout = n1.calculeMeilleurCout(np2, out chemin);
 
-                    coutsInter.Add(chemin,cout);
+                        coutsInter.Add(chemin, cout);
+                    }
                 }
             }
 
@@ -156,6 +159,8 @@ namespace ProjetIA_Pesle_Spriet
 
             pointsPassageOrdonnes.Add(noeudCourant);
 
+
+            /*
             foreach (KeyValuePair< List<GenericNode>, double> couple in coutsInter)
             {
                 //dico temporaire correspondant aux successeurs du noeudCourant (= sa ligne dans la matrice) 
@@ -183,10 +188,13 @@ namespace ProjetIA_Pesle_Spriet
                 }
             }
 
+            */
+
+
             /* on recup les points d'interet dans l'ordre ideal de passage, 
             il faut récupérer aussi TOUS les points du chemin avec le cout */
 
-            //    /!\ plantage si passage par une impasse du reseeau !! A résoudre ! /!\
+            //    /!\ plantage à résoudre ! /!\
 
             // conversion du chemin en string lisible
             cheminString = "";

@@ -134,18 +134,22 @@ namespace ProjetIA_Pesle_Spriet
             ResCollectLait.AfficheMatrix();
             List<RouteNode> impNoms;
             int nbImp = ResCollectLait.GetNbImpasses(out impNoms);
-            
+            /*
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
             Application.Run(new Form2());
-            
+            */
             Console.WriteLine("##################################");
             Console.WriteLine("le reseau a {0} impasses, pour les noeuds : {1}",
                 nbImp, String.Join(", ",impNoms));
             Console.WriteLine("##################################");
-           
-            
+
+            NodeRecherche nodeM = new NodeRecherche("M");
+            List<GenericNode> chemin = new List<GenericNode>();
+            double unCout = nodeM.calculeMeilleurCout("S",out chemin);
+            Console.WriteLine("meilleur cout de M à S : " + unCout.ToString());
+            Console.WriteLine("en passant par : " + String.Join(", ", chemin));
         }
     }
 }
