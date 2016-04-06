@@ -137,9 +137,8 @@ namespace ProjetIA_Pesle_Spriet
                     if (np1 != np2)  // diagonale de la matrice nulle
                     {
                         NodeRecherche n2 = new NodeRecherche(np2);
-                        List<GenericNode> chemin;
+                        List<GenericNode> chemin = new List<GenericNode>();
                         double cout = n1.calculeMeilleurCout(np2, out chemin);
-
                         coutsInter.Add(chemin, cout);
                     }
                 }

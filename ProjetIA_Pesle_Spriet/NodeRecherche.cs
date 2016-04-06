@@ -56,16 +56,16 @@ namespace ProjetIA_Pesle_Spriet
         //renvoie le cout du + court chemin de this à noeudFinal
         public double calculeMeilleurCout(string noeudFinal, out List<GenericNode> chemin)
         {
-            NodeRecherche noeudInit = this; // new NodeRecherche(Name); // départ de this
+           // NodeRecherche noeudInit = this; // new NodeRecherche(Name); // départ de this
             NodeRecherche.nomLieuFinal = noeudFinal; // retour à noeudFinal
 
             Graph graph = new Graph();
 
             //meilleur chemin de this à noeudFinal
-            chemin = graph.RechercheSolutionAEtoile(noeudInit);
+            chemin = graph.RechercheSolutionAEtoile(this/*noeudInit*/);
 
             double cout = 0;
-            NodeRecherche n1 = noeudInit;
+            NodeRecherche n1 = this;// noeudInit;
             NodeRecherche n2;
 
             //somme des couts intermédiaires
