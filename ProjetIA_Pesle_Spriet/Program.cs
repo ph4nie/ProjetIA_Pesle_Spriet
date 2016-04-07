@@ -130,26 +130,47 @@ namespace ProjetIA_Pesle_Spriet
             W.AddArc(L, 10);
             W.AddArc(K, 7);
 
+            // création et affichage de la matrice d'adjacences du reseeau
             ResCollectLait.CreateAdjMatrix();
             ResCollectLait.AfficheMatrix();
+            
+            //Recherche des impasses du reseau
             List<RouteNode> impNoms;
             int nbImp = ResCollectLait.GetNbImpasses(out impNoms);
-            
+
+            //calcul du dictionnaire d'heuristiques (retours en A)
+            ResCollectLait.calculeCoutsRetour();
+
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            // Application.Run(new Form1());
             Application.Run(new Form2());
-            
+
+
             Console.WriteLine("##################################");
             Console.WriteLine("le reseau a {0} impasses, pour les noeuds : {1}",
                 nbImp, String.Join(", ",impNoms));
             Console.WriteLine("##################################");
 
-            NodeRecherche nodeM = new NodeRecherche("M");
+            
             List<GenericNode> chemin = new List<GenericNode>();
-            //double unCout = nodeM.calculeMeilleurCout("S",out chemin);
-           // Console.WriteLine("meilleur cout de M à S : " + unCout.ToString());
-            Console.WriteLine("en passant par : " + String.Join(", ", chemin));
+            string n1 = "I";
+            string n2 = "N";
+            double unCout = ResCollectLait.calculeMeilleurCout(n1, n2, out chemin);
+            Console.WriteLine("meilleur cout de {0} à {1} : {2}",n1,n2, unCout.ToString());
+            Console.WriteLine("en passant par : {0}", String.Join(", ", chemin));
+
+            Console.WriteLine("##################################");
+            string n3 = "F";
+            //string n4 = "F";
+            List<string> pointsPassage = new List<string>{ n1, n2, n3 /*, n4 */};
+            string cheminString;
+            unCout = ResCollectLait.getItineraire(pointsPassage, out cheminString);
+            Console.WriteLine("meilleur ordre de passage par {0} : {1}", String.Join(", ", pointsPassage),cheminString);
+
+            Console.WriteLine("##################################");
+            
         }
     }
 }

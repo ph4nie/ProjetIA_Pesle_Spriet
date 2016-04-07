@@ -53,44 +53,12 @@ namespace ProjetIA_Pesle_Spriet
             return ListeSucc;
         }
 
-        //renvoie le cout du + court chemin de this à noeudFinal
-        public double calculeMeilleurCout(string noeudFinal, out List<GenericNode> chemin)
-        {
-           // NodeRecherche noeudInit = this; // new NodeRecherche(Name); // départ de this
-            NodeRecherche.nomLieuFinal = noeudFinal; // retour à noeudFinal
 
-            Graph graph = new Graph();
-
-            //meilleur chemin de this à noeudFinal
-            chemin = graph.RechercheSolutionAEtoile(this/*noeudInit*/);
-
-            double cout = 0;
-            NodeRecherche n1 = this;// noeudInit;
-            NodeRecherche n2;
-
-            //somme des couts intermédiaires
-            foreach (GenericNode n in chemin)
-            {
-                n2 = n as NodeRecherche;
-                if (n2 != n1)
-                    cout += n1.GetArcCost(n2);
-                n1 = n2;
-            }
-
-            return (cout);
-        }
-
-        // surcharge si pas besoin de recup le chemin
-        public double calculeMeilleurCout(string noeudFinal)
-        {
-            List<GenericNode> chemin = new List<GenericNode>();
-            return (calculeMeilleurCout(noeudFinal, out  chemin));
-
-        }
         // estimation du cout restant pour atteindre noeud final = cout de retour à A
         public override void CalculeHCost()
-        {            
-            SetEstimation(calculeMeilleurCout("A"));
+        {
+            double Hcost = reseau.getCoutRetour(Name);
+            SetEstimation(Hcost); 
         }
     }
 }
