@@ -200,7 +200,6 @@ namespace ProjetIA_Pesle_Spriet
                 }
             }
             Console.WriteLine(coutsInter.Count().ToString() + " couts intermédiares calculés");
-            Console.WriteLine("et {0} points de passage", pointsPassage.Count().ToString());
             Console.WriteLine("####################################################");
             List <string> coutsInterString = new List<string>();
             foreach(List<GenericNode> lgn in coutsInter.Keys)
@@ -210,12 +209,6 @@ namespace ProjetIA_Pesle_Spriet
             Console.WriteLine("chemins inter : "+ string.Join("| ",coutsInterString));
             Console.WriteLine("couts associés : " + string.Join("    |    ", coutsInter.Values));
 
-            Console.WriteLine("##################################");
-            string debut, fin;
-            debut = coutsInter.First().Key.First().GetNom();
-            fin = coutsInter.First().Key.Last().GetNom();
-            Console.WriteLine("le chemin {0} commence par {1} et fini par {2}",coutsInterString[0],
-                debut, fin);
 
             // a partir de cette "matrice", calcul des distances de proche en proche 
             // pour définir le chemin total à parcourir dans l'ordre optimal
@@ -230,7 +223,7 @@ namespace ProjetIA_Pesle_Spriet
 
             pointsPassageOrdonnes.Add(noeudCourant.GetNom());
 
-            for (int i = 0; i <= pointsPassage.Count(); i++) 
+            for (int i = 0; i < pointsPassage.Count(); i++) 
             {
                 //dico temporaire correspondant aux successeurs du noeudCourant (= sa ligne dans la matrice) 
                 Dictionary<List<GenericNode>, double> successeurs = new Dictionary<List<GenericNode>, double>();
@@ -239,15 +232,15 @@ namespace ProjetIA_Pesle_Spriet
                 {
                     if (couple.Key.First().GetNom() == noeudCourant.GetNom() && //chemin au départ de noeudCourant
                         (!pointsPassageOrdonnes.Contains(couple.Key.Last().GetNom()) // evite doublons
-                        || (couple.Key.Last().GetNom()=="A" && i == pointsPassage.Count()))) //sauf pour retour en A à la fin
+                        || (couple.Key.Last().GetNom()=="A" && i == pointsPassage.Count()-1))) //sauf pour retour en A à la fin
                     {
-                        Console.WriteLine("MATCH ! " + couple.Key.Last().GetNom()+", "+couple.Value);
+                        Console.WriteLine("MATCH ! " + noeudCourant.GetNom() + couple.Key.Last().GetNom()+", "+couple.Value);
                         successeurs.Add(couple.Key, couple.Value);
                     }
                 }
 
-                Console.WriteLine("le noeud {0} a {1} successeur(s)"/* : {2}"*/, noeudCourant.GetNom(),
-                    successeurs.Count().ToString() /*, String.Join(", ", successeurs.Keys.First())*/);
+                Console.WriteLine("le noeud {0} a {1} successeur(s)", noeudCourant.GetNom(),
+                    successeurs.Count().ToString());
 
                 //recherche du successeur le plus proche
                 foreach (KeyValuePair<List<GenericNode>, double> succ in successeurs)
@@ -259,19 +252,27 @@ namespace ProjetIA_Pesle_Spriet
                         prochainNoeud = succ.Key.Last();
                         //ajout du noeud a la liste ordonnée
                         pointsPassageOrdonnes.Add(prochainNoeud.GetNom());
+                        //ajout du cout du trajet intermédiaire
+                        coutTotal += succ.Value;
+                        //ajout de chaque point intermédiaire au chemin total
+                        foreach (NodeRecherche n in succ.Key)
+                        {                          
+                            if(cheminTotal.Count==0 || n.GetNom()!=cheminTotal.Last().GetNom())
+                                cheminTotal.Add(n);       
+                        }
+                        
                         //passage au couple suivant, c à d au depart de ce noeud
                         noeudCourant = prochainNoeud;
+
+                        // si plusieurs noeuds ont le même cout minimal, on s'arrete au premier
+                        break; 
                     }
                 }
             }
 
-            /* théoriquement, on recup les points d'interet dans l'ordre ideal de passage, 
-            il faut récupérer aussi TOUS les points du chemin avec le cout */
-
-
             // conversion du chemin en string lisible
             cheminString = "";
-            cheminString+= String.Join(", ", pointsPassageOrdonnes/*cheminTotal*/);
+            cheminString+= String.Join(", ", cheminTotal);
 
             return coutTotal;
         }

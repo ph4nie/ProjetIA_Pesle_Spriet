@@ -155,19 +155,20 @@ namespace ProjetIA_Pesle_Spriet
 
             
             List<GenericNode> chemin = new List<GenericNode>();
-            string n1 = "I";
-            string n2 = "N";
+            string n1 = "G";
+            string n2 = "F";
             double unCout = ResCollectLait.calculeMeilleurCout(n1, n2, out chemin);
             Console.WriteLine("meilleur cout de {0} à {1} : {2}",n1,n2, unCout.ToString());
             Console.WriteLine("en passant par : {0}", String.Join(", ", chemin));
 
             Console.WriteLine("##################################");
-            string n3 = "F";
+            string n3 = "B";
             //string n4 = "F";
-            List<string> pointsPassage = new List<string>{ n1, n2, n3 /*, n4 */};
+            List<string> pointsPassage = new List<string>{n1,n2,n3 }; // "B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W"
             string cheminString;
             unCout = ResCollectLait.getItineraire(pointsPassage, out cheminString);
             Console.WriteLine("meilleur ordre de passage par {0} : {1}", String.Join(", ", pointsPassage),cheminString);
+            Console.WriteLine("cout associé : {0}", unCout);
 
             Console.WriteLine("##################################");
             
