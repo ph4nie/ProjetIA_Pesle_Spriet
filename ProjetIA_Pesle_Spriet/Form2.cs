@@ -22,21 +22,14 @@ namespace ProjetIA_Pesle_Spriet
         {
             if (checkedListBoxNoeuds.CheckedItems.Count != 0)
             {
-                int comptFerme = 0; // compte fermes parmi points passage
+
                 List<string> pointsPassage = new List<string>();
 
-                // toutes les fermes du reseau laitier
-                List<string> fermes = new List<string>(new string[] { "B", "H", "G", "J", "F", "M", "O", "V", "Q", "T", "S" });
 
                 // parcours des points selectionnés par l'utilisateur
                 foreach (string point in checkedListBoxNoeuds.CheckedItems)
                 {
                     pointsPassage.Add(point);
-
-                    if (fermes.Contains(point))
-                    {
-                        comptFerme++;
-                    }
                 }
                 label3.Text = String.Join(", ", pointsPassage);
                 string chemin = "";
@@ -45,5 +38,27 @@ namespace ProjetIA_Pesle_Spriet
                 labelAfficheChemin.Text = chemin;
             }
         }
+
+                // *****************************************
+
+             private void CalculeItineraireCollecte(object sender, EventArgs e)
+             {
+                if (checkedListBoxNoeuds.CheckedItems.Count != 0)
+                {
+
+                    List<string> pointsPassage = new List<string>();
+
+                    // parcours des points selectionnés par l'utilisateur
+                    foreach (string point in checkedListBoxNoeuds.CheckedItems)
+                    {
+                        pointsPassage.Add(point);
+                    }
+                    label3.Text = String.Join(", ", pointsPassage);
+                    string chemin = "";
+                    double cout = NodeRecherche.reseau.getItinCollecte(pointsPassage, out chemin);
+                    labelCout.Text = cout.ToString();
+                    labelAfficheChemin.Text = chemin;
+                }
+            }
     }
 }
