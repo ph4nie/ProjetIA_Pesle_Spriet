@@ -381,9 +381,8 @@ namespace ProjetIA_Pesle_Spriet
                         }
                     }
 
-                    Console.WriteLine("le noeud {0} a {1} successeur(s)", noeudCourant.GetNom(),
-                        successeurs.Count().ToString());
-
+                    Console.WriteLine("le noeud {0} a {1} successeur(s) et citerne remplie à {2}/4", noeudCourant.GetNom(),
+                        successeurs.Count().ToString(),comptFerme);
 
                     //recherche du successeur le plus proche
                     foreach (KeyValuePair<List<GenericNode>, double> succ in successeurs)
@@ -431,7 +430,8 @@ namespace ProjetIA_Pesle_Spriet
                     }
                 }
 
-                if (comptFerme == 4) // la citerne est pleine
+                // la citerne est pleine, ou la collecte est terminée
+                if ((comptFerme == 4) || tousVisites(pointsPassage, pointsPassageOrdonnes)) 
                 {
                     // on retourne en A
                     List<GenericNode> succChemin = getCheminRetour(noeudCourant.GetNom());
@@ -440,7 +440,7 @@ namespace ProjetIA_Pesle_Spriet
                     prochainNoeud = succChemin.Last();
                     coutTotal += succCout;
 
-                    Console.WriteLine("MATCH ! " + noeudCourant.GetNom() + "A , " + succCout);
+                    Console.WriteLine("Retour : " + noeudCourant.GetNom() + "A , " + succCout);
 
                     //ajout de chaque point intermédiaire au chemin total
                     foreach (NodeRecherche n in succChemin)
