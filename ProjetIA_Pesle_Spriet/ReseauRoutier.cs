@@ -229,8 +229,7 @@ namespace ProjetIA_Pesle_Spriet
                     }
                 }
             }
-            Console.WriteLine(coutsInter.Count().ToString() + " couts intermédiares calculés");
-            Console.WriteLine("####################################################");
+
             List <string> coutsInterString = new List<string>();
             foreach(List<GenericNode> lgn in coutsInter.Keys)
             {
@@ -258,13 +257,13 @@ namespace ProjetIA_Pesle_Spriet
             {
                 //dico temporaire correspondant aux successeurs du noeudCourant (= sa ligne dans la matrice) 
                 Dictionary<List<GenericNode>, double> successeurs = new Dictionary<List<GenericNode>, double>();
-
+                
                 foreach (KeyValuePair<List<GenericNode>, double> couple in coutsInter)
                 {
                     if (couple.Key.First().GetNom() == noeudCourant.GetNom() && //chemin au départ de noeudCourant
-                        (!pointsPassageOrdonnes.Contains(couple.Key.Last().GetNom())) || // evite doublons
+                        (!pointsPassageOrdonnes.Contains(couple.Key.Last().GetNom()) || // evite doublons
                             //sauf pour retour en A à la fin
-                        couple.Key.Last().GetNom()=="A" && tousVisites(pointsPassage, pointsPassageOrdonnes)) 
+                        couple.Key.Last().GetNom()=="A" && tousVisites(pointsPassage, pointsPassageOrdonnes))) 
                     {
                         Console.WriteLine("MATCH ! " + noeudCourant.GetNom() + couple.Key.Last().GetNom()+", "+couple.Value);
                         successeurs.Add(couple.Key, couple.Value);

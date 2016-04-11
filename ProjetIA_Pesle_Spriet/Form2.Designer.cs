@@ -111,6 +111,7 @@
             // 
             // labelAfficheChemin
             // 
+            this.labelAfficheChemin.AutoEllipsis = true;
             this.labelAfficheChemin.AutoSize = true;
             this.labelAfficheChemin.Location = new System.Drawing.Point(385, 100);
             this.labelAfficheChemin.Name = "labelAfficheChemin";
@@ -150,7 +151,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(661, 290);
+            this.ClientSize = new System.Drawing.Size(899, 290);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
