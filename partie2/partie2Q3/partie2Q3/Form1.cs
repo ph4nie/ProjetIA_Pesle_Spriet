@@ -12,13 +12,16 @@ namespace partie2Q3
 {
     public partial class Form1 : Form
     {
-        // Fenetre permettant de visualiser notamment les valeurs initiales et finales des poids,
+        // Fenetre permettant de visualiser les valeurs initiales et finales des poids,
         // le nombre d'itérations et le nombre d'erreurs
         // Un graphe montrant la position des points et la droite séparatrice définie par les poids
 
         List<Exemple> exemples = new List<Exemple>();
         Perceptron perceptron;
-        
+        Bitmap bmp;
+        double xmax = 6;
+        double ymin = 0;
+        double ymax = 0;
 
         public Form1()
         {
@@ -27,8 +30,15 @@ namespace partie2Q3
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //importation des données
+            //Initialisation de l'image
+            bmp = (Bitmap)pictBoxPlot.Image;
+            for (int i = 0; i < bmp.Width; i++)
+                for (int j = 0; j < bmp.Height; j++)
+                   bmp.SetPixel(i, j, Color.Black);
             
+
+            //importation des données
+
             exemples.Add(new Exemple(0.2, 4.839161656, "A"));
             exemples.Add(new Exemple(0.4, 5.043697771, "A"));
             exemples.Add(new Exemple(0.6, 4.548758355, "A"));
@@ -91,11 +101,40 @@ namespace partie2Q3
             exemples.Add(new Exemple(5.8, -4.700576381, "B"));
             exemples.Add(new Exemple(6, -5.528898302, "B"));
 
+            
             foreach (Exemple ex in exemples)
             {
+                //affichage des données dans la listBox
                 listBoxExemples.Items.Add(ex.getX()+"   " + ex.getY() +"    " + ex.getGroupe());
+
+                //calcul de ymin et ymax pour l'étalonnage
+                if (ex.getY() < ymin)
+                    ymin = ex.getY();
+                if (ex.getY() > ymax)
+                    ymax = ex.getY();
             }
-            
+
+            // Affichage en nuage de points dans l'image
+            foreach (Exemple ex in exemples)
+            {
+                // mise à l'échelle des valeurs pour optimiser l'affichage dans l'image
+                double ax = ex.getX()/xmax;
+                double ay = (ex.getY()+ Math.Abs(ymin))/(ymax+ Math.Abs(ymin));
+
+                int x = (int)((bmp.Width-1) * ax);
+                int y = (int)((bmp.Height-1) * ay);
+
+                switch (ex.getGroupe())
+                {
+                    case "A":
+                        bmp.SetPixel(x-1, bmp.Height - y-1, Color.Red);
+                        break;
+                    case "B":
+                        bmp.SetPixel(x-1, bmp.Height - y-1, Color.Chartreuse);
+                        break;
+                }
+            }
+            pictBoxPlot.Invalidate();
         }
 
         private void buttonTri_Click(object sender, EventArgs e)
@@ -113,7 +152,7 @@ namespace partie2Q3
 
         private void buttonInit_Click(object sender, EventArgs e)
         {
-            // Initialisation du perceptron à 2 entrées + constante
+            // Initialisation du perceptron à 2 entrées + 1 constante
             perceptron = new Perceptron(3);
 
             // affichage des poids initiaux
@@ -138,6 +177,53 @@ namespace partie2Q3
             // affichage du nombre d'erreurs et d'itérations
             label_nbErreurs.Text = nbErreurs.ToString();
             label_nbIterations.Text = nbIterations.ToString();
+
+            //**** Affichage de la droite séparatrice calculée
+
+            //Initialisation ddu background
+            bmp = (Bitmap)pictBoxPlot.Image;
+            for (int i = 0; i < bmp.Width; i++)
+                for (int j = 0; j < bmp.Height; j++)
+                    bmp.SetPixel(i, j, Color.Black);
+
+            // Affichage en nuage de points dans l'image
+            foreach (Exemple ex in exemples)
+            {
+                // mise à l'échelle des valeurs pour optimiser l'affichage dans l'image
+                double ax = ex.getX() / xmax;
+                double ay = (ex.getY() + Math.Abs(ymin)) / (ymax + Math.Abs(ymin));
+
+                int x = (int)((bmp.Width - 1) * ax);
+                int y = (int)((bmp.Height - 1) * ay);
+
+                switch (ex.getGroupe())
+                {
+                    case "A":
+                        bmp.SetPixel(x - 1, bmp.Height - y - 1, Color.Red);
+                        break;
+                    case "B":
+                        bmp.SetPixel(x - 1, bmp.Height - y - 1, Color.Chartreuse);
+                        break;
+                }
+            }
+            pictBoxPlot.Invalidate();
+
+            // Affichage nouvelle droite
+            for (int x = 0; x < bmp.Width; x++)
+            {
+                double ax = (double)x / bmp.Width;
+                double x_calc = xmax * ax;
+                //equation de la droite séparatrice
+                double y_calc = -(poids[0] * x_calc + poids[2]) / poids[1];
+
+                double ay = (y_calc + Math.Abs(ymin)) / (ymax + Math.Abs(ymin));
+                int y = (int)((bmp.Height - 1) * ay);
+
+                //affichage(ty
+                pictBoxPlot.Invalidate();
+                if (y >= 0 && y < bmp.Height)
+                    bmp.SetPixel(x, bmp.Height - y - 1, Color.White);
+            }
         }
     }
 }

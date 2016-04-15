@@ -50,6 +50,8 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label_nbIterations = new System.Windows.Forms.Label();
             this.label_nbErreurs = new System.Windows.Forms.Label();
+            this.pictBoxPlot = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.pictBoxPlot)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonTri
@@ -67,7 +69,7 @@
             this.listBoxExemples.FormattingEnabled = true;
             this.listBoxExemples.Location = new System.Drawing.Point(29, 24);
             this.listBoxExemples.Name = "listBoxExemples";
-            this.listBoxExemples.Size = new System.Drawing.Size(257, 446);
+            this.listBoxExemples.Size = new System.Drawing.Size(257, 472);
             this.listBoxExemples.TabIndex = 2;
             // 
             // buttonExeAppr
@@ -252,11 +254,21 @@
             this.label_nbErreurs.TabIndex = 22;
             this.label_nbErreurs.Text = "¤";
             // 
+            // pictBoxPlot
+            // 
+            this.pictBoxPlot.Image = global::partie2Q3.Properties.Resources.blank1;
+            this.pictBoxPlot.Location = new System.Drawing.Point(331, 274);
+            this.pictBoxPlot.Name = "pictBoxPlot";
+            this.pictBoxPlot.Size = new System.Drawing.Size(200, 200);
+            this.pictBoxPlot.TabIndex = 23;
+            this.pictBoxPlot.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(936, 542);
+            this.Controls.Add(this.pictBoxPlot);
             this.Controls.Add(this.label_nbErreurs);
             this.Controls.Add(this.label_nbIterations);
             this.Controls.Add(this.label10);
@@ -282,6 +294,7 @@
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.pictBoxPlot)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -310,6 +323,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label label_nbIterations;
         private System.Windows.Forms.Label label_nbErreurs;
+        private System.Windows.Forms.PictureBox pictBoxPlot;
     }
 }
 
