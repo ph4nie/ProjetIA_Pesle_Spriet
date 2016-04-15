@@ -13,8 +13,6 @@ namespace partie2Q3
         private int nbEntrees;
         private int seuil;
         private int sortie;
-        private int nbErreurs;
-        private int nbIterations;
 
         Random rnd = new Random();
 
@@ -40,6 +38,7 @@ namespace partie2Q3
         {
             double somme = 0;
 
+            // somme des entrées pondérées par leurs poids respectifs
             for (int i = 0; i < nbEntrees; i++)
             {
                 somme += (poids[i] * entrees[i]);
@@ -113,6 +112,5 @@ namespace partie2Q3
             // renvoie les valeurs finales des poids
             return poids;
         }
-
     }
 }

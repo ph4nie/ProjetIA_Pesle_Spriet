@@ -114,27 +114,7 @@ namespace partie2Q3
                     ymax = ex.getY();
             }
 
-            // Affichage en nuage de points dans l'image
-            foreach (Exemple ex in exemples)
-            {
-                // mise à l'échelle des valeurs pour optimiser l'affichage dans l'image
-                double ax = ex.getX()/xmax;
-                double ay = (ex.getY()+ Math.Abs(ymin))/(ymax+ Math.Abs(ymin));
-
-                int x = (int)((bmp.Width-1) * ax);
-                int y = (int)((bmp.Height-1) * ay);
-
-                switch (ex.getGroupe())
-                {
-                    case "A":
-                        bmp.SetPixel(x-1, bmp.Height - y-1, Color.Red);
-                        break;
-                    case "B":
-                        bmp.SetPixel(x-1, bmp.Height - y-1, Color.Chartreuse);
-                        break;
-                }
-            }
-            pictBoxPlot.Invalidate();
+            initImage();
         }
 
         private void buttonTri_Click(object sender, EventArgs e)
@@ -156,17 +136,42 @@ namespace partie2Q3
             perceptron = new Perceptron(3);
 
             // affichage des poids initiaux
-            labelW1init.Text = perceptron.getPoids(0).ToString();
-            labelW2init.Text = perceptron.getPoids(1).ToString();
-            labelW3init.Text = perceptron.getPoids(2).ToString();
+            double w1 = perceptron.getPoids(0);
+            double w2 = perceptron.getPoids(1);
+            double w3 = perceptron.getPoids(2);
+            labelW1init.Text = w1.ToString();
+            labelW2init.Text = w2.ToString();
+            labelW3init.Text = w3.ToString();
+
+            // Affichage de la droite initiale avec les poids aléatoires
+
+            initImage();
+
+            for (int x = 0; x < bmp.Width; x++)
+            {
+                double ax = (double)x / bmp.Width;
+                double x_calc = xmax * ax;
+
+                //equation de la droite séparatrice  y=-(W1*X+W3)/W2
+                double y_calc = -(w1* x_calc + w3) / w2;
+
+                double ay = (y_calc + Math.Abs(ymin)) / (ymax + Math.Abs(ymin));
+                int y = (int)((bmp.Height - 1) * ay);
+
+                //affichage
+                pictBoxPlot.Invalidate();
+                if (y >= 0 && y < bmp.Height)
+                    bmp.SetPixel(x, bmp.Height - y - 1, Color.White);
+            }
         }
 
+        //execute l'apprentissage
         private void buttonExeAppr_Click(object sender, EventArgs e)
         {
             int nbErreurs;
             int nbIterations;
 
-            // apprentissage sur la base d'exemple = calcul des poids
+            // apprentissage sur la base d'exemples = calcul des poids
             double[] poids = perceptron.ApprendreExemples(exemples, out nbErreurs, out nbIterations);
 
             // affichage des poids finaux
@@ -178,10 +183,33 @@ namespace partie2Q3
             label_nbErreurs.Text = nbErreurs.ToString();
             label_nbIterations.Text = nbIterations.ToString();
 
-            //**** Affichage de la droite séparatrice calculée
+            //**** Affichage de la droite séparatrice calculée par le perceptron
 
-            //Initialisation ddu background
-            bmp = (Bitmap)pictBoxPlot.Image;
+            initImage();
+
+            // Affichage nouvelle droite
+            for (int x = 0; x < bmp.Width; x++)
+            {
+                double ax = (double)x / bmp.Width;
+                double x_calc = xmax * ax;
+
+                //equation de la droite séparatrice  y=-(W1*X+W3)/W2
+                double y_calc = -(poids[0] * x_calc + poids[2]) / poids[1];
+
+                double ay = (y_calc + Math.Abs(ymin)) / (ymax + Math.Abs(ymin));
+                int y = (int)((bmp.Height - 1) * ay);
+
+                //affichage
+                pictBoxPlot.Invalidate();
+                if (y >= 0 && y < bmp.Height)
+                    bmp.SetPixel(x, bmp.Height - y - 1, Color.White);
+            }
+        }
+
+        private void initImage()
+        {
+            //clear d'une droite précédemment tracée
+            //Initialisation du background
             for (int i = 0; i < bmp.Width; i++)
                 for (int j = 0; j < bmp.Height; j++)
                     bmp.SetPixel(i, j, Color.Black);
@@ -207,23 +235,6 @@ namespace partie2Q3
                 }
             }
             pictBoxPlot.Invalidate();
-
-            // Affichage nouvelle droite
-            for (int x = 0; x < bmp.Width; x++)
-            {
-                double ax = (double)x / bmp.Width;
-                double x_calc = xmax * ax;
-                //equation de la droite séparatrice
-                double y_calc = -(poids[0] * x_calc + poids[2]) / poids[1];
-
-                double ay = (y_calc + Math.Abs(ymin)) / (ymax + Math.Abs(ymin));
-                int y = (int)((bmp.Height - 1) * ay);
-
-                //affichage(ty
-                pictBoxPlot.Invalidate();
-                if (y >= 0 && y < bmp.Height)
-                    bmp.SetPixel(x, bmp.Height - y - 1, Color.White);
-            }
         }
     }
 }

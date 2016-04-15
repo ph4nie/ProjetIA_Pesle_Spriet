@@ -33,7 +33,5 @@ namespace partie2Q3
         {
             return groupe;
         }
-
-
     }
 }
